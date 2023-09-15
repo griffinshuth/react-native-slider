@@ -12,6 +12,7 @@ import {
   View,
   ImageURISource,
   Text,
+  TextStyle,
 } from 'react-native';
 import RCTSliderNativeComponent from './index';
 //@ts-ignore
@@ -324,8 +325,9 @@ const SliderComponent = (
         <View
           pointerEvents="none"
           style={{
-            width: width - (width/options.length * 2),
+            marginHorizontal: width * 0.033,
             flexDirection: "row",
+            justifyContent: "space-between",
             top: Platform.OS === "ios" ? -25 : -15,
             zIndex: 2,
           }}
@@ -336,7 +338,6 @@ const SliderComponent = (
                 <View
                   style={{
                     alignItems: "center",
-                    width: width / options.length,
                   }}
                 >
                   <SliderTrackMark
@@ -346,7 +347,7 @@ const SliderComponent = (
                     StepMarker={props.stepMarker}
                   />
                   {props.renderStepNumber ? (
-                    <Paragraph i={i} key={`${index}-Paragraph`} />
+                    <Paragraph i={i} style={{fontSize: options.length > 9 ? 8 : 12}} key={`${index}-Paragraph`}  />
                   ) : null}
                 </View>
               </Fragment>
@@ -376,10 +377,10 @@ function SliderTrackMark({ isTrue, thumbImage, StepMarker }: TrackMarksProps) {
   );
 }
 
-function Paragraph({ i }: { i: number }) {
+function Paragraph({ i, style }: { i: number, style: StyleProp<TextStyle> }) {
   return (
     <View style={{ marginTop: 20, alignItems: "center" }}>
-      <Text>{i}</Text>
+      <Text style={style}>{i}</Text>
     </View>
   );
 }
@@ -399,31 +400,31 @@ SliderWithRef.defaultProps = {
 
 const customizingStyles = StyleSheet.create({
   outer: {
-    width: 5,
-    height: 5,
-    borderRadius: 5,
+    width: 3,
+    height: 3,
+    borderRadius: 3,
     backgroundColor: "#11FF11",
     justifyContent: "center",
     alignItems: "center",
   },
   outerTrue: {
-    width: 5,
-    height: 5,
-    borderRadius: 5,
+    width: 3,
+    height: 3,
+    borderRadius: 3,
     backgroundColor: "#0F0FFF",
     justifyContent: "center",
     alignItems: "center",
   },
   inner: {
-    width: 2,
-    height: 2,
-    borderRadius: 2,
+    width: 1,
+    height: 1,
+    borderRadius: 1,
     backgroundColor: "#111111",
   },
   innerTrue: {
-    width: 2,
-    height: 2,
-    borderRadius: 2,
+    width: 1,
+    height: 1,
+    borderRadius: 1,
     backgroundColor: "#0F0FFF",
   },
 })
