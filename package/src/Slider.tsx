@@ -318,7 +318,7 @@ const SliderComponent = (
         <View
           pointerEvents="none"
           style={{
-            marginHorizontal: width * 0.034,
+            marginHorizontal: width * 0.033,
             flexDirection: "row",
             justifyContent: "space-between",
             top: Platform.OS === "ios" ? -25 : -15,
@@ -330,8 +330,7 @@ const SliderComponent = (
               <Fragment key={index}>
                 <View
                   style={{
-                    alignContent: "center",
-                    justifyContent: "center"
+                    alignItems: "center",
                   }}
                 >
                   <SliderTrackMark
@@ -353,19 +352,22 @@ const SliderComponent = (
 };
 
 function SliderTrackMark({isTrue, thumbImage, StepMarker}: TrackMarksProps) {
-  return ( 
-    <View style={{borderColor: "red", borderWidth: 1, alignContent: "center", justifyContent: "center"}}>
-      {StepMarker && typeof StepMarker !== 'boolean' ? (
-        <StepMarker stepMarked={isTrue} />
+  return isTrue ? (
+    <>
+      {thumbImage ? (
+        <View style={customizingStyles.outerTrue}>
+          <Image source={thumbImage} />
+        </View>
+      ) : StepMarker && typeof StepMarker !== 'boolean' ? (
+        <StepMarker stepMarked={true} />
       ) : (
-        <View
-          style={isTrue ? customizingStyles.outerTrue : customizingStyles.outer}
-        />
+        <View style={customizingStyles.innerTrue} />
       )}
-      {thumbImage && isTrue ? (
-        <Image source={thumbImage} style={{position: 'absolute'}} />
-      ) : null}
-    </View>
+    </>
+  ) : StepMarker && typeof StepMarker !== 'boolean' ? (
+    <StepMarker stepMarked={false} />
+  ) : (
+    <View style={customizingStyles.inner} />
   );
 }
 
