@@ -282,7 +282,17 @@ const SliderComponent = (
       onLayout={(event) => {
         setWidth(event.nativeEvent.layout.width);
       }}
-      style={[styles, style]}>
+      style={[styles, style, {justifyContent: 'center'}]}>
+      {props.stepMarker || !!props.renderStepNumber ? (
+        <StepsIndicator
+          options={options}
+          sliderWidth={width}
+          currentValue={currentValue}
+          renderStepNumber={localProps.renderStepNumber}
+          thumbImage={localProps.thumbImage}
+          customStepMarker={localProps.stepMarker}
+        />
+      ) : null}
       <RCTSliderNativeComponent
         {...localProps}
         value={value}
@@ -297,7 +307,11 @@ const SliderComponent = (
             : Image.resolveAssetSource(props.thumbImage)
         }
         ref={forwardedRef}
-        style={[sliderStyle, defaultStyle]}
+        style={[
+          sliderStyle,
+          defaultStyle,
+          {alignContent: 'center', alignItems: 'center'},
+        ]}
         onChange={onValueChangeEvent}
         onRNCSliderSlidingStart={onSlidingStartEvent}
         onRNCSliderSlidingComplete={onSlidingCompleteEvent}
@@ -312,16 +326,6 @@ const SliderComponent = (
             : props.thumbTintColor
         }
       />
-      {props.stepMarker || !!props.renderStepNumber ? (
-        <StepsIndicator
-          options={options}
-          sliderWidth={width}
-          currentValue={currentValue}
-          renderStepNumber={localProps.renderStepNumber}
-          thumbImage={localProps.thumbImage}
-          customStepMarker={localProps.stepMarker}
-        />
-      ) : null}
     </View>
   );
 };
